@@ -1,5 +1,9 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Extensions;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using YeBucks_Bot.Commands;
 using YeBucks_Bot.Config;
@@ -9,6 +13,7 @@ namespace YeBucks_Bot
     internal class Program
     {
         private static DiscordClient Client { get; set; }
+        private static InteractivityExtension Interactivity { get; set; }
         private static CommandsNextExtension Commands { get; set; }
         static async Task Main(string[] args)
         {
@@ -23,6 +28,8 @@ namespace YeBucks_Bot
                 AutoReconnect = true,
             };
 
+
+         
 
             Client = new DiscordClient(DiscordConfig);
 
