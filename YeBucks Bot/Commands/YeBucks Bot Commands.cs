@@ -8,10 +8,19 @@ namespace YeBucks_Bot.Commands
 {
     public class YeBucks_Bot_Commands : BaseCommandModule
     {
-        [Command("Test")]
-        public async Task TestCommand(CommandContext context)
+        [Command("Message")]
+        [Description("Sends a set message.")]
+        public async Task TestCommand(CommandContext context, DiscordChannel channel, params string[] message)
         {
-            await context.Channel.SendMessageAsync("This is a test command.");
+            string allContents = string.Join(" ", message);
+            var embed = new DiscordEmbedBuilder
+            {
+                Description = $"{allContents}",
+                Color = DiscordColor.SpringGreen,
+                Timestamp = DateTime.Now,
+            };
+            await channel.SendMessageAsync(embed: embed);
+
         }
 
         [Command("Ban")]
@@ -54,7 +63,7 @@ namespace YeBucks_Bot.Commands
                 Title = "Bot Commands",
                 Description = "!ban [user] - bans specific user from server\n !vouch [seller] [reason] - adds a vouch to a specific seller you mention and gives them a vouch score\n More commands coming soon!",
                 Color = DiscordColor.Black,
-                
+
                 Timestamp = DateTime.Now,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
