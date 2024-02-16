@@ -1,11 +1,10 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Interactivity;
-using DSharpPlus.Interactivity.Extensions;
-using System;
-using System.Threading;
+using DSharpPlus.SlashCommands;
 using System.Threading.Tasks;
 using YeBucks_Bot.Commands;
+using YeBucks_Bot.Commands.Slash;
 using YeBucks_Bot.Config;
 
 namespace YeBucks_Bot
@@ -38,17 +37,22 @@ namespace YeBucks_Bot
                 StringPrefixes = new string[] { JsonReader.prefix },
                 EnableMentionPrefix = true,
                 EnableDms = true,
-                EnableDefaultHelp = false,
+                EnableDefaultHelp = true,
                 
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);
 
+            var slashCommandConfig = Client.UseSlashCommands();
+
             Commands.RegisterCommands<YeBucks_Bot_Commands>();
+
+            slashCommandConfig.RegisterCommands<BasicSL>();
 
 
             await Client.ConnectAsync();
             await Task.Delay(-1);
+
 
         }
 
@@ -56,6 +60,7 @@ namespace YeBucks_Bot
         {
             return Task.CompletedTask;
         }
+
     }
 }
 

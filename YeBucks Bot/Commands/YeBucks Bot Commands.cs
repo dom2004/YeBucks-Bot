@@ -24,6 +24,7 @@ namespace YeBucks_Bot.Commands
         }
 
         [Command("Ban")]
+        [RequirePermissions(DSharpPlus.Permissions.BanMembers)]
         [Description("Bans user from the server")]
         public async Task BanCommand(CommandContext context, DiscordMember member, [RemainingText] string reason)
         {
@@ -33,15 +34,16 @@ namespace YeBucks_Bot.Commands
 
         [Command("Vouch")]
         [Description("Vouches a seller")]
-        public async Task VouchCommand(CommandContext context, DiscordMember member, string reason)
+        public async Task VouchCommand(CommandContext context, DiscordUser member, params string[] reason)
         {
-            int score = 0;
+            string allContents = string.Join(" ", reason);
             var message = new DiscordEmbedBuilder
             {
                 Title = "New vouch created!",
-                Description = $"Vouch Reason:\n {reason}\n\n Vouch\n Seller: {member.Mention}\n\n Vouch created by: {context.User.Mention}",
+                Description = $"Vouch Reason:\n {allContents}\n\n Vouch\n Seller: {member.Mention}\n\n Vouch created by: {context.User.Mention}",
                 Color = DiscordColor.Red,
                 Timestamp = DateTime.Now,
+                ImageUrl = context.Message.Attachments[0].Url,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     Text = "Bot created by Legois"
@@ -53,26 +55,5 @@ namespace YeBucks_Bot.Commands
             };
             await context.Channel.SendMessageAsync(embed: message);
         }
-
-        [Command("Help")]
-        [Description("Sends a list of commands")]
-        public async Task HelpCommand(CommandContext context)
-        {
-            var message = new DiscordEmbedBuilder
-            {
-                Title = "Bot Commands",
-                Description = "!ban [user] - bans specific user from server\n !vouch [seller] [reason] - adds a vouch to a specific seller you mention and gives them a vouch score\n More commands coming soon!",
-                Color = DiscordColor.Black,
-
-                Timestamp = DateTime.Now,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = "Bot created by Legois"
-                },
-            };
-            await context.Channel.SendMessageAsync(embed: message);
-        }
     }
 }
-
-
