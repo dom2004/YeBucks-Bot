@@ -160,6 +160,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Basic.cs" />
     <Compile Include="Commands\Slash\BasicSL.cs" />
     <Compile Include="Commands\YeBucks Bot Commands.cs" />
     <Compile Include="Config\JSONreader.cs" />

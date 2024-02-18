@@ -1,7 +1,10 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Enums;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.SlashCommands;
+using System;
 using System.Threading.Tasks;
 using YeBucks_Bot.Commands;
 using YeBucks_Bot.Commands.Slash;
@@ -11,7 +14,7 @@ namespace YeBucks_Bot
 {
     internal class Program
     {
-        private static DiscordClient Client { get; set; }
+        public static DiscordClient Client { get; private set; }
         private static InteractivityExtension Interactivity { get; set; }
         private static CommandsNextExtension Commands { get; set; }
         static async Task Main(string[] args)
@@ -31,6 +34,12 @@ namespace YeBucks_Bot
          
 
             Client = new DiscordClient(DiscordConfig);
+
+            Client.UseInteractivity(new InteractivityConfiguration()
+            {
+                PollBehaviour = PollBehaviour.KeepEmojis,
+                Timeout = TimeSpan.FromSeconds(30)
+            });
 
             var commandsConfig = new CommandsNextConfiguration()
             {
